@@ -18,18 +18,19 @@
 
 /* Ambient glow from the main render */
 .rs-glows{position:absolute;inset:0;z-index:0;pointer-events:none}
-.is-active .rs-glow{display:block;position:absolute;inset:-12%;width:124%;height:124%;object-fit:cover;filter:blur(70px) saturate(1.6) brightness(.98);opacity:0;transform:translateZ(0)}
+/* Drawn at a quarter size and scaled up: the same soft light for far less work. */
+.is-active .rs-glow{display:block;position:absolute;left:50%;top:50%;width:31%;height:31%;object-fit:cover;filter:blur(18px) saturate(1.6) brightness(.98);opacity:0;transform:translate(-50%,-50%) scale(4);will-change:opacity}
 .is-active .rs-stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(20,20,20,.4) 100%),linear-gradient(to top,rgba(20,20,20,.62),transparent 20%)}
 
 /* The wheel */
-.is-active .rs-frame{position:absolute;left:0;top:0;padding:0;display:flex;align-items:center;justify-content:center;transform-origin:center;will-change:transform,opacity;cursor:pointer}
+.is-active .rs-frame{position:absolute;left:0;top:0;padding:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;transform-origin:center;will-change:transform,opacity;cursor:pointer}
 .is-active .rs-frame.is-main{cursor:default}
 .is-active .rs-frame .rs-image{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.45);border-radius:2px}
 .is-active .rs-frame:not(.is-main):hover .rs-image{outline:1px solid rgba(245,243,238,.7);outline-offset:4px}
 
 /* Caption of the main render */
 .rs-captions{position:absolute;left:var(--gutter);right:calc(var(--gutter) + 120px);bottom:clamp(34px,5vh,52px);z-index:70;pointer-events:none}
-.rs-captions figcaption{position:absolute;left:0;bottom:0;display:flex;gap:20px;align-items:baseline;margin:0;font-size:13px;letter-spacing:.02em;opacity:0}
+.rs-captions figcaption{position:absolute;left:0;bottom:0;will-change:opacity;display:flex;gap:20px;align-items:baseline;margin:0;font-size:13px;letter-spacing:.02em;opacity:0}
 .rs-captions figcaption strong{font-weight:500;color:var(--paper)}
 .rs-captions figcaption span{color:#c9c6be}
 
@@ -37,7 +38,7 @@
 .is-active .rs-ui{display:block;z-index:71;position:absolute;left:var(--gutter);right:var(--gutter);bottom:clamp(22px,3vh,30px);pointer-events:none}
 .rs-count{position:absolute;right:0;bottom:12px;font-size:13px;letter-spacing:.08em;font-variant-numeric:tabular-nums}
 .rs-progress{height:1px;background:rgba(245,243,238,.25)}
-.rs-progress span{display:block;height:100%;width:0;background:var(--paper)}
+.rs-progress span{display:block;height:100%;width:100%;background:var(--paper);transform:scaleX(0);transform-origin:left;will-change:transform}
 .is-single .rs-ui,.is-single .rs-hint{display:none}
 
 .rs-skip{display:none}
@@ -54,7 +55,7 @@
 @media(max-width:700px){
  .render-sequence.is-active{height:calc(100vh + (var(--frames) - 1) * 70vh + 30vh);height:calc(100svh + (var(--frames) - 1) * 70vh + 30vh)}
  .render-sequence.is-single{height:100vh;height:100svh}
- .is-active .rs-glow{filter:blur(44px) saturate(1.6) brightness(.98)}
+ .is-active .rs-glow{filter:blur(11px) saturate(1.6) brightness(.98)}
  .rs-captions{right:calc(var(--gutter) + 64px)}
  .rs-captions figcaption{display:block;font-size:12px}
  .rs-captions figcaption span{display:block;margin-top:4px}
