@@ -20,3 +20,16 @@
 .community-manifesto{display:grid;gap:60px}.community-source{font-size:14px;color:var(--muted);max-width:90ch;margin-top:35px}
 @media(max-width:1000px){.community-page .project-nav>span{display:none}.community-survey-lead{gap:4vw}.community-photos,.community-phase-grid{gap:24px}.community-board figcaption h3{font-size:21px}}
 @media(max-width:700px){.community-page .project-hero>figure>img{max-height:none;width:100%}.community-page .project-nav{gap:10px;justify-content:flex-start}.community-survey-lead,.community-photos,.community-phase-grid,.community-survey-grid,.community-sheet-grid{grid-template-columns:1fr;gap:38px}.community-survey-copy{grid-row:1}.community-photos{margin-top:44px}.community-board .zoom-label{position:static;display:block;opacity:1;text-align:center;padding:10px;border:0;border-top:1px solid var(--line)}.community-detail{margin-top:40px}.community-detail>summary{font-size:17px}.community-page .project-design .community-board{padding:12px}.community-phase-grid{gap:48px}.community-manifesto{gap:38px}.community-board figcaption h3{font-size:24px}}
+/* Laptop and desktop: the three phase-two boards sit in one row, scaled so the
+   whole row (boards + captions) fits on one screen. Phones keep the stacked layout. */
+@media(min-width:701px){
+ .community-page .community-phase-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;align-items:start}
+ .community-page .community-phase-grid>figure:last-child:nth-child(odd){grid-column:auto;width:auto;justify-self:stretch}
+ /* Boards are 1:2 portrait: cap the width so the height fits the screen. */
+ .community-page .community-phase-grid .drawing-button{display:block;width:min(100%,calc((100vh - 230px) / 2));width:min(100%,calc((100svh - 230px) / 2));margin:0 auto}
+ .community-page .community-phase-grid .drawing-button img{width:100%;height:auto}
+ .community-page .community-phase-grid figcaption{max-width:min(100%,calc((100svh - 230px) / 2));margin-left:auto;margin-right:auto}
+ .community-page .community-phase-grid figcaption{margin-top:14px;padding-top:12px}
+ .community-page .community-phase-grid figcaption h3{font-size:19px}
+ .community-page .community-phase-grid figcaption p{font-size:14px;margin-top:8px}
+}
