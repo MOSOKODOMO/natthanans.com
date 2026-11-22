@@ -1,4 +1,5 @@
-/* Render wheel: the project's renders sit on a ring. Scrolling turns the wheel;
+/* Render wheel: on laptops the project's renders sit on a ring (on phones,
+   a vertical reel). Scrolling turns the wheel;
    the render arriving at the top grows into the large main view while the one
    leaving shrinks back into the ring. Each main view casts its ambient glow.
    Scrolling stays native (wheel, trackpad, touch and keyboard all work). */
@@ -39,12 +40,15 @@
    geo = {
     W, H, mobile,
     heroW: mobile ? W * 0.9 : Math.min(W * 0.54, H * 1.05),
-    heroH: mobile ? H * 0.4 : H * 0.52,
-    heroX: W / 2, heroY: mobile ? H * 0.3 : H * 0.44,
-    cx: W / 2, cy: mobile ? H * 0.58 : H * 0.5,
-    rx: mobile ? W * 0.34 : W * 0.37,
-    ry: mobile ? H * 0.27 : H * 0.36,
-    thumb: mobile ? 0.3 : 0.32,
+    heroH: mobile ? H * 0.3 : H * 0.52,
+    // Phones: a vertical reel instead of the ring.
+    reelGap: H * 0.27,
+    heroX: W / 2, heroY: mobile ? H * 0.27 : H * 0.42,
+    cx: W / 2, cy: H * 0.55,
+    rx: W * 0.36,
+    ry: H * 0.34,
+    side: 0.5,   // renders either side of the main one
+    thumb: 0.27, // renders at the bottom of the wheel
     step: (mobile ? 0.7 : 0.9) * window.innerHeight
    };
    frames.forEach(f => { f.style.width = geo.heroW + 'px'; f.style.height = geo.heroH + 'px'; });
@@ -65,18 +69,36 @@
    const { p, travelled } = position();
    const slot = (Math.PI * 2) / Math.max(n, 2);
    frames.forEach((f, i) => {
-    // Angle from the top of the wheel, wrapped to [-PI, PI].
-    let a = (i - p) * slot;
-    a = Math.atan2(Math.sin(a), Math.cos(a));
-    const near = ease(clamp(1 - Math.abs(a) / slot, 0, 1)); // 1 = main view
-    const rx = geo.cx + geo.rx * Math.sin(a);
-    const ry = geo.cy - geo.ry * Math.cos(a);
-    const x = lerp(rx, geo.heroX, near);
-    const y = lerp(ry, geo.heroY, near);
-    const s = lerp(geo.thumb, 1, near);
+    let near, x, y, s, o, depth;
+    if (geo.mobile) {
+     // Vertical reel: renders stacked down the screen, the top one is main.
+     const d = i - p; // <0 above (leaving), >0 below (coming up)
+     near = ease(clamp(1 - Math.abs(d), 0, 1));
+     x = geo.heroX;
+     y = geo.heroY + d * geo.reelGap + (d > 0 ? (1 - near) * geo.H * 0.03 : 0);
+     s = d >= 0 ? lerp(0.8, 1, near) : lerp(0.7, 1, near);
+     o = d >= 0 ? lerp(0.7, 1, near) : clamp(1 + d * 1.4, 0, 1);
+     // Fade renders as they reach the caption at the bottom of the screen.
+     o *= clamp((geo.H * 0.82 - y) / (geo.H * 0.14), 0, 1);
+     depth = Math.abs(d) * 3;
+    } else {
+     // Ring: angle from the top of the wheel, wrapped to [-PI, PI].
+     let a = (i - p) * slot;
+     a = Math.atan2(Math.sin(a), Math.cos(a));
+     near = ease(clamp(1 - Math.abs(a) / slot, 0, 1)); // 1 = main view
+     // Neighbours flank the main render large; renders further round sit
+     // smaller towards the bottom of the wheel.
+     const back = n > 2 ? clamp((Math.abs(a) - slot) / (Math.PI - slot), 0, 1) : 0;
+     const ringScale = lerp(geo.side, geo.thumb, back);
+     x = lerp(geo.cx + geo.rx * Math.sin(a), geo.heroX, near);
+     y = lerp(geo.cy - geo.ry * Math.cos(a), geo.heroY, near);
+     s = lerp(ringScale, 1, near);
+     o = lerp(lerp(0.9, 0.6, back), 1, near);
+     depth = Math.abs(a) * 4;
+    }
     f.style.transform = `translate(${x - geo.heroW / 2}px, ${y - geo.heroH / 2}px) scale(${s})`;
-    f.style.zIndex = String(10 + Math.round(near * 50) - Math.round(Math.abs(a) * 2));
-    f.style.opacity = String(lerp(0.55, 1, near));
+    f.style.zIndex = String(20 + Math.round(near * 40) - Math.round(depth));
+    f.style.opacity = String(o);
     f.classList.toggle('is-main', near > 0.5);
     f.setAttribute('aria-hidden', near > 0.5 ? 'false' : 'true');
     if (glows[i]) glows[i].style.opacity = String(near);
