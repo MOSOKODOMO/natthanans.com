@@ -1,0 +1,42 @@
+.north-page .project-title h1{max-width:17ch}
+.north-page .project-hero>figure>img{aspect-ratio:auto;max-height:none;height:auto}
+.north-page .project-nav{overflow-x:auto;white-space:nowrap;gap:26px}
+.north-page .project-nav>*{flex-shrink:0}
+.north-page .eyebrow{font-size:14px;letter-spacing:.09em}
+.north-page .project-metadata dt{font-size:12px}
+.north-page .project-metadata dd,.north-page .project-hero figcaption{font-size:14px}
+.north-page .section-top>p{font-size:16px;color:var(--muted)}
+.north-page .overview-grid>div>p:not(.large-copy){margin-top:24px}
+.north-context,.north-massing{background:#fff}
+.north-context-grid,.north-research-grid,.north-sequence-grid,.north-experience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 40px}
+.north-figure{min-width:0}
+.north-figure .drawing-button{padding:0;background:transparent}
+.north-figure .drawing-button img{width:100%;height:auto;object-fit:contain}
+.north-figure .zoom-label{font-size:14px;line-height:1.5}
+.north-figure figcaption{margin-top:20px;border-top:1px solid var(--line);padding-top:17px}
+.north-figure figcaption h3{font-size:24px;line-height:1.2;color:var(--ink)}
+.north-figure figcaption p{font-size:16px;line-height:1.6;margin-top:10px}
+.north-context-grid{max-width:1050px;margin:auto}
+.north-context-grid .drawing-button img{max-height:720px}
+.north-disclosure{margin-top:60px;padding:25px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.north-disclosure>summary{font-size:18px;cursor:pointer}
+.north-disclosure>summary::marker{color:var(--blue)}
+.north-disclosure[open]>summary{margin-bottom:32px}
+.north-detail-intro{font-size:16px;color:var(--muted);max-width:80ch;margin-bottom:38px}
+.north-research-grid .drawing-button img{max-height:650px}
+.north-process-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.north-process-grid .north-figure figcaption h3{font-size:22px}
+.north-page .drawing-tabs{overflow-x:auto}
+.north-page .drawing-tabs button{flex-shrink:0;font-size:16px}
+.north-page .drawing-panels .caption{font-size:14px}
+.north-page .drawing-panels [role=tabpanel]>.drawing-button{padding:0;height:693px;background:transparent}
+.north-wide{margin-bottom:56px}
+.north-experience-grid{align-items:start}
+.north-night-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 48px;margin:56px auto;max-width:1050px}
+.north-night-grid>.north-figure:last-child{grid-column:1/-1;width:calc(50% - 24px);justify-self:center}
+.north-page .source-note{font-size:16px}
+@media(max-width:1000px){.north-page .project-nav>span{display:none}.north-process-grid{grid-template-columns:1fr;gap:42px;max-width:800px;margin:auto}.north-context-grid,.north-research-grid,.north-sequence-grid,.north-experience-grid{gap:44px 28px}}
+@media(max-width:700px){.north-page .project-title h1{font-size:clamp(42px,11vw,62px)}.north-page .project-nav{justify-content:flex-start;gap:24px;font-size:13px}.north-page .project-metadata dd,.north-page .project-hero figcaption{font-size:12px}.north-page .project-metadata dt{font-size:11px}.north-context-grid,.north-research-grid,.north-sequence-grid,.north-experience-grid,.north-night-grid{grid-template-columns:1fr;gap:42px}.north-night-grid>.north-figure:last-child{grid-column:auto;width:100%}.north-figure .zoom-label{position:static;display:block;opacity:1;text-align:center;padding:10px;border:0;border-top:1px solid var(--line)}.north-figure figcaption{margin-top:12px;padding-top:14px}.north-figure figcaption h3{font-size:24px}.north-disclosure{margin-top:40px}.north-page .drawing-panels [role=tabpanel]>.drawing-button{height:auto}.north-page .drawing-panels [role=tabpanel]>.drawing-button img{height:auto}.north-wide{margin-bottom:40px}}
+
+.north-atmosphere{background:#eae7df}.north-atmosphere-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:60px 36px}.north-atmosphere-lead{grid-column:1/-1}.north-ai-note{display:block;margin-top:12px;font-size:14px;color:var(--muted)}
+@media(max-width:700px){.north-atmosphere-grid{grid-template-columns:1fr;gap:42px}.north-atmosphere-lead{grid-column:auto}}
